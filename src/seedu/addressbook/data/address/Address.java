@@ -1,6 +1,9 @@
-package seedu.addressbook.data.person;
+package seedu.addressbook.data.address;
 
 import seedu.addressbook.data.exception.IllegalValueException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Represents a Person's address in the address book.
@@ -9,8 +12,13 @@ import seedu.addressbook.data.exception.IllegalValueException;
 public class Address {
 
     public static final String EXAMPLE = "123, some street";
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
-    public static final String ADDRESS_VALIDATION_REGEX = ".+";
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses should be in this format: BLOCK, STREET, UNIT, POSTALCODE";
+    public static final Pattern ADDRESS_VALIDATION_REGEX = Pattern.compile("(?<block>.*),(?<street>.*),(?<unit>.*),(?<postalCode>.*)");
+
+    public final Block block;
+    public final Street street;
+    public final Unit unit;
+    public final PostalCode postalCode;
 
     public final String value;
     private boolean isPrivate;
@@ -22,18 +30,20 @@ public class Address {
      */
     public Address(String address, boolean isPrivate) throws IllegalValueException {
         String trimmedAddress = address.trim();
+
+        Matcher addressValidator = ADDRESS_VALIDATION_REGEX.matcher(trimmedAddress);
+
         this.isPrivate = isPrivate;
-        if (!isValidAddress(trimmedAddress)) {
+        if (!addressValidator.matches()) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        this.value = trimmedAddress;
-    }
 
-    /**
-     * Returns true if a given string is a valid person address.
-     */
-    public static boolean isValidAddress(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
+        this.block = new Block(addressValidator.group("block"));
+        this.street = new Street(addressValidator.group("street"));
+        this.unit = new Unit(addressValidator.group("unit"));
+        this.postalCode = new PostalCode(addressValidator.group("postalCode"));
+
+        this.value = trimmedAddress;
     }
 
     @Override

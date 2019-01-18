@@ -6,4 +6,9 @@ public class PostalCode {
     public PostalCode(String postalCode) {
         this.value = postalCode;
     }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 }

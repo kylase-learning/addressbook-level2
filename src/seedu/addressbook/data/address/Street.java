@@ -6,4 +6,9 @@ public class Street {
     public Street(String street) {
         this.value = street;
     }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 }

@@ -6,4 +6,9 @@ public class Block {
     public Block(String block) {
         this.value = block;
     }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 }

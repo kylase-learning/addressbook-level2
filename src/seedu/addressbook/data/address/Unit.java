@@ -6,4 +6,9 @@ public class Unit {
     public Unit(String unit) {
         this.value = unit;
     }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 }

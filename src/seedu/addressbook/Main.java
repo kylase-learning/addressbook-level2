@@ -13,6 +13,7 @@ import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.StorageFile;
 import seedu.addressbook.storage.StorageFile.InvalidStorageFilePathException;
 import seedu.addressbook.storage.StorageFile.StorageOperationException;
+import seedu.addressbook.ui.Formatter;
 import seedu.addressbook.ui.TextUi;
 
 
@@ -55,10 +56,10 @@ public class Main {
             this.ui = new TextUi();
             this.storage = initializeStorage(launchArgs);
             this.addressBook = storage.load();
-            ui.showWelcomeMessage(VERSION, storage.getPath());
+            Formatter.WELCOME.show(VERSION, storage.getPath());
 
         } catch (InvalidStorageFilePathException | StorageOperationException e) {
-            ui.showInitFailedMessage();
+            Formatter.INIT_FAILED.show();
             /*
              * ==============NOTE TO STUDENTS=========================================================================
              * We are throwing a RuntimeException which is an 'unchecked' exception. Unchecked exceptions do not need
@@ -74,7 +75,7 @@ public class Main {
 
     /** Prints the Goodbye message and exits. */
     private void exit() {
-        ui.showGoodbyeMessage();
+        Formatter.GOODBYE.show();
         System.exit(0);
     }
 
@@ -82,7 +83,10 @@ public class Main {
     private void runCommandLoopUntilExitCommand() {
         Command command;
         do {
+            Formatter.MESSAGES_WITH_PREFIX.show("Enter command: ");
             String userCommandText = ui.getUserCommand();
+            Formatter.MESSAGES.show("[Command entered:" + userCommandText + "]");
+
             command = new Parser().parseCommand(userCommandText);
             CommandResult result = executeCommand(command);
             recordResult(result);
@@ -112,7 +116,7 @@ public class Main {
             storage.save(addressBook);
             return result;
         } catch (Exception e) {
-            ui.showToUser(e.getMessage());
+            Formatter.MESSAGES.show(e.getMessage());
             throw new RuntimeException(e);
         }
     }

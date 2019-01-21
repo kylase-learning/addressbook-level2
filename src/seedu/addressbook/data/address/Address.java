@@ -1,5 +1,6 @@
 package seedu.addressbook.data.address;
 
+import seedu.addressbook.data.Printable;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.ArrayList;
@@ -9,9 +10,9 @@ import java.util.regex.Pattern;
 
 /**
  * Represents a Person's address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
+ * Guarantees: immutable; is valid as declared ...}
  */
-public class Address {
+public class Address implements Printable {
 
     public static final String EXAMPLE = "123, some street";
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses should be in this format: BLOCK, STREET, UNIT, POSTALCODE";
@@ -78,5 +79,15 @@ public class Address {
 
     public boolean isPrivate() {
         return isPrivate;
+    }
+
+    @Override
+    public String getPrintableString() {
+        return getClass().getSimpleName() + ": " + this.toString();
+    }
+
+    @Override
+    public String getPrintableString(Printable... printables) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
     }
 }

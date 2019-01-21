@@ -1,6 +1,8 @@
 package seedu.addressbook.data.contact;
 
-abstract class Contact {
+import seedu.addressbook.data.Printable;
+
+abstract class Contact implements Printable {
     public String value;
     private boolean isPrivate;
 
@@ -28,5 +30,15 @@ abstract class Contact {
 
     public boolean isPrivate() {
         return isPrivate;
+    }
+
+    @Override
+    public String getPrintableString() {
+        return getClass().getSimpleName() + ": " + this.value;
+    }
+
+    @Override
+    public String getPrintableString(Printable... printables) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
     }
 }

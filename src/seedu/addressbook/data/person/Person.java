@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.addressbook.data.address.Address;
+import seedu.addressbook.data.contact.Email;
+import seedu.addressbook.data.contact.Phone;
 import seedu.addressbook.data.tag.Tag;
 
 /**

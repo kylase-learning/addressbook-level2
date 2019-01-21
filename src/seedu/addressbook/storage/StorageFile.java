@@ -76,7 +76,11 @@ public class StorageFile {
     public void save(AddressBook addressBook) throws StorageOperationException {
         try {
             List<String> encodedAddressBook = AddressBookEncoder.encodeAddressBook(addressBook);
-            Files.write(path, encodedAddressBook);
+            if (Files.isWritable(path)) {
+                Files.write(path, encodedAddressBook);
+            } else {
+                throw new StorageOperationException(path + " is not writable!");
+            }
         } catch (IOException ioe) {
             throw new StorageOperationException("Error writing to file: " + path);
         }

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.addressbook.data.Printable;
 import seedu.addressbook.data.address.Address;
 import seedu.addressbook.data.contact.Email;
 import seedu.addressbook.data.contact.Phone;
@@ -13,7 +14,7 @@ import seedu.addressbook.data.tag.Tag;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Person implements ReadOnlyPerson {
+public class Person implements ReadOnlyPerson, Printable {
 
     private Name name;
     private Phone phone;
@@ -91,4 +92,8 @@ public class Person implements ReadOnlyPerson {
         return getAsTextShowAll();
     }
 
+    @Override
+    public String getPrintableString() {
+        return getPrintableString(this.getName(), this.getEmail(), this.getPhone(), this.getAddress());
+    }
 }
